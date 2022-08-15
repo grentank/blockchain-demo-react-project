@@ -1,5 +1,3 @@
-import hashIsValid from './hashIsValid';
-
 export default async function sha256(message) {
   // console.log('Hashing:', JSON.stringify(message));
   // encode as UTF-8

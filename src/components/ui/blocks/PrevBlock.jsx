@@ -6,21 +6,10 @@ import { LoadingButton } from '@mui/lab';
 import sha256 from '../../../utils/sha256';
 import hashIsValid from '../../../utils/hashIsValid';
 
-export default function NonceBlock() {
-  const [inputs, setInputs] = useState({
-    block: '1',
-    nonce: '46820',
-    data: '',
-  });
-  const [hash, setHash] = useState('00001e6b693480b0506c13f88f3628d43ada442bab441a8f5d597b19b819bd0a');
+export default function PrevBlock({ block: initBlock }) {
+  const [inputs, setInputs] = useState(initBlock);
   const [mining, setMining] = useState(false);
   const [verified, setVerified] = useState(true);
-
-  useEffect(() => {
-    // console.log('useEffect inputs: ', inputs);
-    sha256(inputs)
-      .then((hashText) => setHash(hashText));
-  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -69,6 +58,7 @@ export default function NonceBlock() {
       sx={{
         background: verified ? '#DCEDD6' : '#F8D9DA',
         padding: 5,
+        margin: 3,
       }}
       noValidate
       autoComplete="off"
@@ -114,11 +104,21 @@ export default function NonceBlock() {
         <FormControl fullWidth sx={{ m: 1 }}>
           <TextField
             id="filled-disabled"
+            label="Prev"
+            variant="filled"
+            name="prev"
+            rows={1}
+            value={inputs.prev}
+          />
+        </FormControl>
+        <FormControl fullWidth sx={{ m: 1 }}>
+          <TextField
+            id="filled-disabled"
             label="Hash"
             variant="filled"
-            multiline
+            name="hash"
             rows={1}
-            value={hash}
+            value={inputs.hash}
           />
         </FormControl>
         <LoadingButton loading={mining} variant="contained" onClick={mineNonce}>

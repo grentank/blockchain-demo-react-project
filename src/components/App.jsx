@@ -5,7 +5,7 @@ import NavBar from './ui/navbar/NavBar';
 
 export default function App() {
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="xl">
       <NavBar />
       <PublicRoutes />
     </Container>
