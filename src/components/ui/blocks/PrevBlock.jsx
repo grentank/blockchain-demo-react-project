@@ -3,60 +3,71 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { FormControl, Stack } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import { useDispatch, useSelector } from 'react-redux';
 import sha256 from '../../../utils/sha256';
 import hashIsValid from '../../../utils/hashIsValid';
+import { modifyPrevBlockchain } from '../../../Redux/actions/prevBlockchainActions';
 
-export default function PrevBlock({ block: initBlock }) {
-  const [inputs, setInputs] = useState(initBlock);
-  const [mining, setMining] = useState(false);
-  const [verified, setVerified] = useState(true);
+export default function PrevBlock({ id }) {
+  const blockchain = useSelector((state) => state.prevBlockchain);
+  const block = blockchain[id];
+  const inputs = block.data;
+  // const prevHash = id > 0 ? blockchain[id - 1].hash : '0'.repeat(64);
+
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setInputs((prev) => {
-      const newInputs = { ...prev, [name]: value };
-      //   console.log('newInputs: ', newInputs);
-      sha256(newInputs)
-        .then((hashText) => {
-          setHash(hashText);
-          if (hashIsValid(hashText)) {
-            setVerified(true);
-          } else {
-            setVerified(false);
-          }
-        });
-      return newInputs;
-    });
+    dispatch(modifyPrevBlockchain({ ...inputs, [name]: value }, id));
+    //
+    //
+    //
+    //
+    //
+    // setInputs((prev) => {
+    //   const newInputs = { ...prev, [name]: value };
+    //   //   console.log('newInputs: ', newInputs);
+    //   sha256(newInputs)
+    //     .then((hashText) => {
+    //       setHash(hashText);
+    //       if (hashIsValid(hashText)) {
+    //         setVerified(true);
+    //       } else {
+    //         setVerified(false);
+    //       }
+    //     });
+    //   return newInputs;
+    // });
   };
 
-  const mineNonce = async () => {
-    // console.log('Initial input:', inputs);
-    setMining(true);
-    let newNonce;
-    for (newNonce = 0; newNonce < 1e7; newNonce += 1) {
-      const newInputs = { ...inputs, nonce: `${newNonce}` };
-      const newHash = await sha256(newInputs);
-      if (hashIsValid(newHash)) {
-        // console.log('old inputs: ', inputs, 'newInputs: ', newInputs, 'oldHash: ', hash);
-        setInputs(newInputs);
-        setHash(newHash);
-        setMining(false);
-        setVerified(true);
-        break;
-      }
-      if (newInputs.nonce === 1e7) {
-        console.log('Failed to mine!');
-        setMining(false);
-        break;
-      }
-    }
-    setMining(false);
-  };
+  // const mineNonce = async () => {
+  //   // console.log('Initial input:', inputs);
+  //   setMining(true);
+  //   let newNonce;
+  //   for (newNonce = 0; newNonce < 1e7; newNonce += 1) {
+  //     const newInputs = { ...inputs, nonce: `${newNonce}` };
+  //     const newHash = await sha256(newInputs);
+  //     if (hashIsValid(newHash)) {
+  //       // console.log('old inputs: ', inputs, 'newInputs: ', newInputs, 'oldHash: ', hash);
+  //       setInputs(newInputs);
+  //       setHash(newHash);
+  //       setMining(false);
+  //       setVerified(true);
+  //       break;
+  //     }
+  //     if (newInputs.nonce === 1e7) {
+  //       console.log('Failed to mine!');
+  //       setMining(false);
+  //       break;
+  //     }
+  //   }
+  //   setMining(false);
+  // };
   return (
     <Box
       component="form"
       sx={{
-        background: verified ? '#DCEDD6' : '#F8D9DA',
+        background: block.meta.verified ? '#DCEDD6' : '#F8D9DA',
         padding: 5,
         margin: 3,
       }}
@@ -118,10 +129,10 @@ export default function PrevBlock({ block: initBlock }) {
             variant="filled"
             name="hash"
             rows={1}
-            value={inputs.hash}
+            value={block.hash}
           />
         </FormControl>
-        <LoadingButton loading={mining} variant="contained" onClick={mineNonce}>
+        <LoadingButton loading={block.meta.mining} variant="contained" onClick={() => {}}>
           Mine
         </LoadingButton>
       </Stack>

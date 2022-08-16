@@ -20,4 +20,10 @@ router.route('/block')
     res.layout(initState);
   });
 
+router.route('/blockchain')
+  .get((req, res) => {
+    const initState = { path: req.originalUrl };
+    res.layout(initState);
+  });
+
 export default router;

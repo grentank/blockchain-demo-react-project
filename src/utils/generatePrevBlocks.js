@@ -2,43 +2,42 @@ import mineNonce from './mineNonce';
 // import sha256 from './sha256';
 
 export function generatePrevBlocks(num) {
-  const blockchain = [
-    {
-      block: '1',
-      data: '',
-      hash: '00001c9a3a2f8999f5b26d17d1c03d31fa042d9245d6c1dd7de5179fbbfbf04c',
-      nonce: '217713',
-      prev: '0000000000000000000000000000000000000000000000000000000000000000',
+  const blockchain = [{
+    id: '1',
+    meta: { verified: true, mining: false },
+    hash: '0000494a2c74d8b796e3fb38b4844551d51b1bf776bc6a69bab5ce33df6ae998',
+    data: {
+      block: '1', data: '', nonce: '10982', prev: '0000000000000000000000000000000000000000000000000000000000000000',
     },
-    {
-      block: '2',
-      data: '',
-      hash: '0000ea506528df8812f7e000c54b1384dbc1476e07a0b35b3cc458640bfe3392',
-      nonce: '109094',
-      prev: '00001c9a3a2f8999f5b26d17d1c03d31fa042d9245d6c1dd7de5179fbbfbf04c',
+  }, {
+    id: '2',
+    meta: { verified: true, mining: false },
+    hash: '0000bcdd91a37cc30844fae65f3f16a965138723edff528cc235b9f22f8f29aa',
+    data: {
+      block: '2', data: '', nonce: '2047', prev: '0000494a2c74d8b796e3fb38b4844551d51b1bf776bc6a69bab5ce33df6ae998',
     },
-    {
-      block: '3',
-      data: '',
-      hash: '0000962c1258547276d20b0748dbc857643de12fdd4ec414e506c71c6eddec68',
-      nonce: '2360',
-      prev: '0000ea506528df8812f7e000c54b1384dbc1476e07a0b35b3cc458640bfe3392',
+  }, {
+    id: '3',
+    meta: { verified: true, mining: false },
+    hash: '00008cbc0a34d0d9891742a067586191c24d4644dbb905b214a88b542cab8966',
+    data: {
+      block: '3', data: '', nonce: '32897', prev: '0000bcdd91a37cc30844fae65f3f16a965138723edff528cc235b9f22f8f29aa',
     },
-    {
-      block: '4',
-      data: '',
-      hash: '000061b0987f197f075155193a2e3e897dc993c38006b71ed465b4bb51989153',
-      nonce: '93995',
-      prev: '0000962c1258547276d20b0748dbc857643de12fdd4ec414e506c71c6eddec68',
+  }, {
+    id: '4',
+    meta: { verified: true, mining: false },
+    hash: '000010445dbc62fe44d5786476def47381a95d1206c35f9ad8226f36c803d4f3',
+    data: {
+      block: '4', data: '', nonce: '91287', prev: '00008cbc0a34d0d9891742a067586191c24d4644dbb905b214a88b542cab8966',
     },
-    {
-      block: '5',
-      data: '',
-      hash: '00007b236bf7a23f58f4a0b7ad0056154903aa125e74e04e2b351790202791cc',
-      nonce: '88184',
-      prev: '000061b0987f197f075155193a2e3e897dc993c38006b71ed465b4bb51989153',
+  }, {
+    id: '5',
+    meta: { verified: true, mining: false },
+    hash: '000056520ec6652cf41c41719b326fbdaad9462c036468a0c9859b7eadd14e48',
+    data: {
+      block: '5', data: '', nonce: '21961', prev: '000010445dbc62fe44d5786476def47381a95d1206c35f9ad8226f36c803d4f3',
     },
-  ];
+  }];
   return blockchain.slice(0, num);
 }
 
@@ -46,22 +45,41 @@ export async function generatePrevBlocksAsync(num) {
   const blockchain = [];
   for (let i = 0; i < num; i += 1) {
     if (i > 0) {
-      blockchain.push(await mineNonce({
-        block: (i + 1).toString(),
-        nonce: '0',
-        data: '',
-        prev: blockchain[i - 1].hash,
-        hash: '',
-      }));
+      blockchain.push(await mineNonce(
+        {
+          id: (i + 1).toString(),
+          meta: {
+            verified: true,
+            mining: false,
+          },
+          hash: '00001c9a3a2f8999f5b26d17d1c03d31fa042d9245d6c1dd7de5179fbbfbf04c',
+          data: {
+            block: (i + 1).toString(),
+            data: '',
+            nonce: '0',
+            prev: blockchain[i - 1].hash,
+          },
+        },
+      ));
     } else {
-      blockchain.push(await mineNonce({
-        block: (i + 1).toString(),
-        nonce: '0',
-        data: '',
-        prev: '0000000000000000000000000000000000000000000000000000000000000000',
-        hash: '',
-      }));
+      blockchain.push(await mineNonce(
+        {
+          id: '1',
+          meta: {
+            verified: true,
+            mining: false,
+          },
+          hash: '00001c9a3a2f8999f5b26d17d1c03d31fa042d9245d6c1dd7de5179fbbfbf04c',
+          data: {
+            block: '1',
+            data: '',
+            nonce: '217713',
+            prev: '0'.repeat(64),
+          },
+        },
+      ));
     }
   }
   console.log('Blockchain:', blockchain);
+  console.log(JSON.stringify(blockchain));
 }
