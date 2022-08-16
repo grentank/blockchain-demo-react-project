@@ -1,3 +1,4 @@
+import hashIsValid from '../../utils/hashIsValid';
 import { GENERATE_PREV_BLOCKCHAIN, MODIFY_PREV_BLOCKCHAIN } from '../types';
 
 const prevBlockchainReducer = (state = [], action) => {
@@ -6,15 +7,10 @@ const prevBlockchainReducer = (state = [], action) => {
     case GENERATE_PREV_BLOCKCHAIN:
       return payload;
     case MODIFY_PREV_BLOCKCHAIN:
-      return state.map((el, index) => {
-        const { block, id } = payload;
-        if (id + 1 === index) {
-          return { ...el, prev: block.hash };
-        } if (id === index) {
-          return block;
-        }
-        return el;
-      });
+      return state.map((el, index) => ({
+        ...payload[index],
+        meta: { ...payload[index].meta, verified: hashIsValid(payload[index].hash) },
+      }));
     default:
       return state;
   }

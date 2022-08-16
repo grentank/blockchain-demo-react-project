@@ -18,7 +18,8 @@ export default function PrevBlock({ id }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    dispatch(modifyPrevBlockchain({ ...inputs, [name]: value }, id));
+    // console.log(name, value, inputs);
+    dispatch(modifyPrevBlockchain({ ...inputs, [name]: value }, id, blockchain));
     //
     //
     //

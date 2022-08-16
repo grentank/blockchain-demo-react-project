@@ -15,9 +15,9 @@ export default function PrevChainPage() {
           Blockchain
         </Typography>
       </Grid>
-      {blockchain?.map((el, index) => (
-        <Grid item xs={3} key={el.block}>
-          <PrevBlock id={index} key={el.block} />
+      {blockchain?.map((el) => (
+        <Grid item xs={3} key={el.id}>
+          <PrevBlock id={el.id} />
         </Grid>
       ))}
     </Grid>
