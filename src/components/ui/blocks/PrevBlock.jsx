@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { FormControl, Stack } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useDispatch, useSelector } from 'react-redux';
-import sha256 from '../../../utils/sha256';
-import hashIsValid from '../../../utils/hashIsValid';
-import { modifyPrevBlockchain } from '../../../Redux/actions/prevBlockchainActions';
+import { minePrevBlockNonce, modifyPrevBlockchain, setMiningPrevBlock } from '../../../Redux/actions/prevBlockchainActions';
 
 export default function PrevBlock({ id }) {
   const blockchain = useSelector((state) => state.prevBlockchain);
@@ -18,52 +16,14 @@ export default function PrevBlock({ id }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // console.log(name, value, inputs);
     dispatch(modifyPrevBlockchain({ ...inputs, [name]: value }, id, blockchain));
-    //
-    //
-    //
-    //
-    //
-    // setInputs((prev) => {
-    //   const newInputs = { ...prev, [name]: value };
-    //   //   console.log('newInputs: ', newInputs);
-    //   sha256(newInputs)
-    //     .then((hashText) => {
-    //       setHash(hashText);
-    //       if (hashIsValid(hashText)) {
-    //         setVerified(true);
-    //       } else {
-    //         setVerified(false);
-    //       }
-    //     });
-    //   return newInputs;
-    // });
   };
 
-  // const mineNonce = async () => {
-  //   // console.log('Initial input:', inputs);
-  //   setMining(true);
-  //   let newNonce;
-  //   for (newNonce = 0; newNonce < 1e7; newNonce += 1) {
-  //     const newInputs = { ...inputs, nonce: `${newNonce}` };
-  //     const newHash = await sha256(newInputs);
-  //     if (hashIsValid(newHash)) {
-  //       // console.log('old inputs: ', inputs, 'newInputs: ', newInputs, 'oldHash: ', hash);
-  //       setInputs(newInputs);
-  //       setHash(newHash);
-  //       setMining(false);
-  //       setVerified(true);
-  //       break;
-  //     }
-  //     if (newInputs.nonce === 1e7) {
-  //       console.log('Failed to mine!');
-  //       setMining(false);
-  //       break;
-  //     }
-  //   }
-  //   setMining(false);
-  // };
+  const mineNonce = () => {
+    console.log('This is dispatch:', dispatch(setMiningPrevBlock(id)));
+    dispatch(minePrevBlockNonce(id, blockchain));
+  };
+
   return (
     <Box
       component="form"
@@ -133,7 +93,7 @@ export default function PrevBlock({ id }) {
             value={block.hash}
           />
         </FormControl>
-        <LoadingButton loading={block.meta.mining} variant="contained" onClick={() => {}}>
+        <LoadingButton loading={block.meta.mining} variant="contained" onClick={mineNonce}>
           Mine
         </LoadingButton>
       </Stack>

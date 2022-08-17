@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import store from '../Redux/store';
 import App from './App';
 
-// delete window.__PRELOADED_STATE__;
+delete window.__PRELOADED_STATE__;
 
 ReactDOMClient.hydrateRoot(
   document.getElementById('root'),
