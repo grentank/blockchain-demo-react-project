@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import BlockPage from '../pages/BlockPage';
+import DistributedPage from '../pages/DistributedPage';
 import HashPage from '../pages/HashPage';
 import HomePage from '../pages/HomePage';
 import NoPage404 from '../pages/NoPage404';
@@ -13,6 +14,7 @@ export default function PublicRoutes() {
       <Route path="/hash" element={<HashPage />} />
       <Route path="/block" element={<BlockPage />} />
       <Route path="/blockchain" element={<PrevChainPage />} />
+      <Route path="/distributed" element={<DistributedPage />} />
       <Route path="*" element={<NoPage404 />} />
     </Routes>
   );

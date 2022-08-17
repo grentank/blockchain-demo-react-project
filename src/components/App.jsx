@@ -13,6 +13,8 @@ export default function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(generatePrevBlockchain(4));
+    dispatch(generatePrevBlockchain(4, '_PEER_B'));
+    dispatch(generatePrevBlockchain(4, '_PEER_C'));
   }, []);
   // useEffect(() => {
   //   fetch('/data')

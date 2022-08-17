@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { FormControl, Stack } from '@mui/material';
+import { FormControl, Paper, Stack } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import sha256 from '../../../utils/sha256';
 import hashIsValid from '../../../utils/hashIsValid';
@@ -64,67 +64,69 @@ export default function NonceBlock() {
     setMining(false);
   };
   return (
-    <Box
-      component="form"
-      sx={{
-        background: verified ? '#DCEDD6' : '#F8D9DA',
-        padding: 5,
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <Stack
-        direction="column"
-        justifyContent="flex-start"
-        alignItems="center"
-        spacing={2}
+    <Paper elevation={4} sx={{ margin: 3 }}>
+      <Box
+        component="form"
+        sx={{
+          background: verified ? '#DCEDD6' : '#F8D9DA',
+          padding: 5,
+        }}
+        noValidate
+        autoComplete="off"
       >
-        <FormControl fullWidth sx={{ m: 1, background: '#ffffff' }}>
-          <TextField
-            id="filled-disable-block"
-            label="Block"
-            variant="outlined"
-            name="block"
-            value={inputs.block}
-            onChange={handleChange}
-          />
-        </FormControl>
-        <FormControl fullWidth sx={{ m: 1, background: '#ffffff' }}>
-          <TextField
-            id="filled-disable-nonce"
-            label="Nonce"
-            variant="outlined"
-            name="nonce"
-            value={inputs.nonce}
-            onChange={handleChange}
-          />
-        </FormControl>
-        <FormControl fullWidth sx={{ m: 1, background: '#ffffff' }}>
-          <TextField
-            id="filled-multiline-flexible"
-            label="Data"
-            variant="outlined"
-            multiline
-            name="data"
-            rows={4}
-            value={inputs.data}
-            onChange={handleChange}
-          />
-        </FormControl>
-        <FormControl fullWidth sx={{ m: 1 }}>
-          <TextField
-            id="filled-disabled"
-            label="Hash"
-            variant="filled"
-            multiline
-            rows={1}
-            value={hash}
-          />
-        </FormControl>
-        <LoadingButton loading={mining} variant="contained" onClick={mineNonce}>
-          Mine
-        </LoadingButton>
-      </Stack>
-    </Box>
+        <Stack
+          direction="column"
+          justifyContent="flex-start"
+          alignItems="center"
+          spacing={2}
+        >
+          <FormControl fullWidth sx={{ m: 1, background: '#ffffff' }}>
+            <TextField
+              id="filled-disable-block"
+              label="Block"
+              variant="outlined"
+              name="block"
+              value={inputs.block}
+              onChange={handleChange}
+            />
+          </FormControl>
+          <FormControl fullWidth sx={{ m: 1, background: '#ffffff' }}>
+            <TextField
+              id="filled-disable-nonce"
+              label="Nonce"
+              variant="outlined"
+              name="nonce"
+              value={inputs.nonce}
+              onChange={handleChange}
+            />
+          </FormControl>
+          <FormControl fullWidth sx={{ m: 1, background: '#ffffff' }}>
+            <TextField
+              id="filled-multiline-flexible"
+              label="Data"
+              variant="outlined"
+              multiline
+              name="data"
+              rows={4}
+              value={inputs.data}
+              onChange={handleChange}
+            />
+          </FormControl>
+          <FormControl fullWidth sx={{ m: 1 }}>
+            <TextField
+              id="filled-disabled"
+              label="Hash"
+              variant="filled"
+              multiline
+              rows={1}
+              value={hash}
+            />
+          </FormControl>
+          <LoadingButton loading={mining} variant="contained" onClick={mineNonce}>
+            Mine
+          </LoadingButton>
+        </Stack>
+      </Box>
+    </Paper>
   );
 }
