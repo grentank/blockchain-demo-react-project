@@ -4,7 +4,7 @@ import mineNonce from '../../utils/mineNonce';
 import sha256 from '../../utils/sha256';
 import { GENERATE_PREV_BLOCKCHAIN, MODIFY_PREV_BLOCKCHAIN, SET_MINING_PREV_BLOCK } from '../types';
 
-const recalculatePrevBlockchain = async (blockchain) => {
+export const recalculatePrevBlockchain = async (blockchain) => {
   const newBlockchain = [];
   for (let i = 0; i < blockchain.length; i += 1) {
     const prev = i > 0 ? newBlockchain[i - 1].hash : '0'.repeat(64);

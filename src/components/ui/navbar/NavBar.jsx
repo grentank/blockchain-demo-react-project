@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
-const pages = ['Hash', 'Block', 'Blockchain', 'Distributed'];
+const pages = ['Hash', 'Block', 'Blockchain', 'Distributed', 'Tokens'];
 
 export default function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
