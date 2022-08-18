@@ -26,4 +26,22 @@ router.route('/blockchain')
     res.layout(initState);
   });
 
+router.route('/distributed')
+  .get((req, res) => {
+    const initState = { path: req.originalUrl };
+    res.layout(initState);
+  });
+
+router.route('/tokens')
+  .get((req, res) => {
+    const initState = { path: req.originalUrl };
+    res.layout(initState);
+  });
+
+router.route('/coinbase')
+  .get((req, res) => {
+    const initState = { path: req.originalUrl };
+    res.layout(initState);
+  });
+
 export default router;

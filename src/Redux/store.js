@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import coinbaseBlockchainReducer from './reducers/coinbaseBlockchainReducer';
 import prevBlockchainReducer from './reducers/prevBlockchainReducer';
 import prevBlockchainReducerPeerB from './reducers/prevBlockchainReducerPeerB';
 import prevBlockchainReducerPeerC from './reducers/prevBlockchainReducerPeerC';
@@ -10,6 +11,7 @@ const store = configureStore({
     prevBlockchainPeerB: prevBlockchainReducerPeerB,
     prevBlockchainPeerC: prevBlockchainReducerPeerC,
     tokensBlockchain: tokensBlockchainReducer,
+    coinbaseBlockchain: coinbaseBlockchainReducer,
   },
   preloadedState: window.__PRELOADED_STATE__,
 });

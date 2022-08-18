@@ -1,4 +1,3 @@
-import hashIsValid from '../../utils/hashIsValid';
 import { GENERATE_PREV_BLOCKCHAIN, MODIFY_PREV_BLOCKCHAIN, SET_MINING_PREV_BLOCK } from '../types';
 
 const prevBlockchainReducer = (state = [], action) => {

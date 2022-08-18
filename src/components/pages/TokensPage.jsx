@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import TokensBlock from '../ui/blocks/TokensBlock';
 
 export default function TokensPage() {
-  const blockchain = useSelector((state) => state.prevBlockchain);
+  const blockchain = useSelector((state) => state.tokensBlockchain);
   // const blockchainB = useSelector((state) => state.prevBlockchainPeerB);
   // const blockchainC = useSelector((state) => state.prevBlockchainPeerC);
   return (
