@@ -65,7 +65,7 @@ export default function PrivatePublicBlock() {
     window.crypto.subtle.generateKey(
       {
         name: 'RSA-OAEP',
-        modulusLength: 4096,
+        modulusLength: 2048,
         publicExponent: new Uint8Array([1, 0, 1]),
         hash: 'SHA-256',
       },
@@ -74,8 +74,6 @@ export default function PrivatePublicBlock() {
     ).then(async ({ privateKey: newPrivateKey, publicKey: newPublicKey }) => {
       const privateKey = Buffer.from(await window.crypto.subtle.exportKey('pkcs8', newPrivateKey)).toString('hex');
       const publicKey = Buffer.from(await window.crypto.subtle.exportKey('spki', newPublicKey)).toString('hex');
-      // setPrivateKey(Buffer.from(exportedPrivateKey).toString('hex'));
-      // setPublicKey(Buffer.from(exportedPublicKey).toString('hex'));
       setKeys({ privateKey, publicKey });
     });
   };
@@ -115,7 +113,7 @@ export default function PrivatePublicBlock() {
                 label="Public key"
                 variant="filled"
                 multiline
-                maxRows={3}
+                maxRows={4}
                 // rows={5}
                 value={keys.publicKey}
               />

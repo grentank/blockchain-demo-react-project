@@ -8,6 +8,7 @@ import HomePage from '../pages/HomePage';
 import KeysPage from '../pages/KeysPage';
 import NoPage404 from '../pages/NoPage404';
 import PrevChainPage from '../pages/PrevChainPage';
+import SignaturePage from '../pages/SignaturePage';
 import TokensPage from '../pages/TokensPage';
 
 export default function PublicRoutes() {
@@ -21,6 +22,7 @@ export default function PublicRoutes() {
       <Route path="/tokens" element={<TokensPage />} />
       <Route path="/coinbase" element={<CoinbasePage />} />
       <Route path="/keys" element={<KeysPage />} />
+      <Route path="/signatures" element={<SignaturePage />} />
       <Route path="*" element={<NoPage404 />} />
     </Routes>
   );
