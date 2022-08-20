@@ -1,8 +1,8 @@
 import { Grid, Typography } from '@mui/material';
 import React from 'react';
-import SignatureBlock from '../ui/blocks/SignatureBlock';
+import TransactionBlock from '../ui/blocks/TransactionBlock';
 
-export default function SignaturePage() {
+export default function TransactionPage() {
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -10,11 +10,11 @@ export default function SignaturePage() {
           fontSize: 34,
         }}
         >
-          Signatures
+          Transaction
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <SignatureBlock />
+        <TransactionBlock />
       </Grid>
     </Grid>
   );

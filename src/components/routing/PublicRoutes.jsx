@@ -6,10 +6,12 @@ import DistributedPage from '../pages/DistributedPage';
 import HashPage from '../pages/HashPage';
 import HomePage from '../pages/HomePage';
 import KeysPage from '../pages/KeysPage';
+import ModelPage from '../pages/ModelPage';
 import NoPage404 from '../pages/NoPage404';
 import PrevChainPage from '../pages/PrevChainPage';
 import SignaturePage from '../pages/SignaturePage';
 import TokensPage from '../pages/TokensPage';
+import TransactionPage from '../pages/TransactionPage';
 
 export default function PublicRoutes() {
   return (
@@ -23,6 +25,8 @@ export default function PublicRoutes() {
       <Route path="/coinbase" element={<CoinbasePage />} />
       <Route path="/keys" element={<KeysPage />} />
       <Route path="/signatures" element={<SignaturePage />} />
+      <Route path="/transactions" element={<TransactionPage />} />
+      <Route path="/model" element={<ModelPage />} />
       <Route path="*" element={<NoPage404 />} />
     </Routes>
   );

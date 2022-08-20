@@ -12,7 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from 'react-router-dom';
 
-const pages = ['Hash', 'Block', 'Blockchain', 'Distributed', 'Tokens', 'Coinbase', 'Keys', 'Signatures'];
+const pages = ['Hash', 'Block', 'Blockchain', 'Distributed', 'Tokens', 'Coinbase', 'Keys', 'Signatures', 'Transactions', 'Model'];
 
 export default function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);

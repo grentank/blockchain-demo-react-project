@@ -44,4 +44,16 @@ router.route('/coinbase')
     res.layout(initState);
   });
 
+router.route('/keys')
+  .get((req, res) => {
+    const initState = { path: req.originalUrl };
+    res.layout(initState);
+  });
+
+router.route('/signatures')
+  .get((req, res) => {
+    const initState = { path: req.originalUrl };
+    res.layout(initState);
+  });
+
 export default router;

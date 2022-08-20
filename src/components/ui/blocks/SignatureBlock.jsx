@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import {
   Button,
-  Fade, FormControl, Paper, Stack,
+  Fade, FormControl, Paper, Stack, Typography,
 } from '@mui/material';
 import { Buffer } from 'buffer';
 
@@ -28,10 +28,7 @@ export default function SignatureBlock() {
         return '#E9ECEF';
     }
   };
-  const messageChange = (e) => {
-    setMessage((prev) => ({ ...prev, text: e.target.value }));
-    setReceivedMessage(e.target.value);
-  };
+  const messageChange = (e) => setMessage((prev) => ({ ...prev, text: e.target.value }));
   const receivedHandler = (e) => setReceivedMessage(e.target.value);
   const signHandler = () => {
     window.crypto.subtle.sign(
@@ -43,6 +40,7 @@ export default function SignatureBlock() {
       Buffer.from(message.text),
     ).then((sig) => {
       setMessage((prev) => ({ ...prev, signature: Buffer.from(sig).toString('hex'), _sig: sig }));
+      setReceivedMessage(message.text);
     });
     setGrowReceive(true);
   };
@@ -127,52 +125,62 @@ export default function SignatureBlock() {
         </Paper>
       </Fade>
       <Fade in={growReceive}>
-        <Paper elevation={4} sx={{ margin: 3, marginTop: 5 }}>
-          <Box
-            component="form"
-            sx={{
-              background: validColor(valid),
-              padding: 5,
-            }}
-            noValidate
-            autoComplete="off"
+        <div>
+
+          <Typography sx={{
+            fontSize: 20,
+            marginTop: 15,
+          }}
           >
-            <Stack
-              direction="column"
-              justifyContent="flex-start"
-              alignItems="center"
-              spacing={2}
+            Receiver:
+          </Typography>
+          <Paper elevation={4} sx={{ margin: 3 }}>
+            <Box
+              component="form"
+              sx={{
+                background: validColor(valid),
+                padding: 5,
+              }}
+              noValidate
+              autoComplete="off"
             >
-              <FormControl fullWidth sx={{ m: 1, background: '#ffffff' }}>
-                <TextField
-                  label="Message"
-                  variant="outlined"
-                  multiline
-                  rows={4}
-                  value={receivedMessage}
-                  onChange={receivedHandler}
-                />
-              </FormControl>
-              <FormControl fullWidth sx={{ m: 1 }}>
-                <TextField
-                  label="Public key"
-                  variant="filled"
-                  value={hexKeypair.publicKey}
-                />
-              </FormControl>
-              <FormControl fullWidth sx={{ m: 1 }}>
-                <TextField
-                  label="Signature"
-                  variant="filled"
-                  value={message.signature}
-                />
-              </FormControl>
-              <Button variant="contained" onClick={verifyHandler}>
-                Verify
-              </Button>
-            </Stack>
-          </Box>
-        </Paper>
+              <Stack
+                direction="column"
+                justifyContent="flex-start"
+                alignItems="center"
+                spacing={2}
+              >
+                <FormControl fullWidth sx={{ m: 1, background: '#ffffff' }}>
+                  <TextField
+                    label="Message"
+                    variant="outlined"
+                    multiline
+                    rows={4}
+                    value={receivedMessage}
+                    onChange={receivedHandler}
+                  />
+                </FormControl>
+                <FormControl fullWidth sx={{ m: 1 }}>
+                  <TextField
+                    label="Public key"
+                    variant="filled"
+                    value={hexKeypair.publicKey}
+                  />
+                </FormControl>
+                <FormControl fullWidth sx={{ m: 1 }}>
+                  <TextField
+                    label="Signature"
+                    variant="filled"
+                    value={message.signature}
+                  />
+                </FormControl>
+                <Button variant="contained" onClick={verifyHandler}>
+                  Verify
+                </Button>
+              </Stack>
+            </Box>
+          </Paper>
+        </div>
       </Fade>
     </>
   );
