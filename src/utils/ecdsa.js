@@ -61,6 +61,18 @@ export async function generateTransactionNoVerification(amount) {
   const data = { sender, receiver, amount };
   return { data, meta: { verified: null }, signature: '' };
 }
+
+export async function generatePeer() {
+  const peer = { keypair: await generateKeyPair() };
+  peer.publicKeyHex = Buffer.from(await window.crypto.subtle.exportKey('spki', peer.keypair.publicKey)).toString('hex');
+  return peer;
+}
+
+export async function generateP2PTransaction(data) {
+  // console.log('Generating transaction:', data);
+  return signTransaction({ data })
+    .then((transaction) => ({ ...transaction, meta: { verified: true } }));
+}
 // export async function generateTwoKeyPairs() {
 //   const sender = { keypair: await generateKeyPair() };
 // }

@@ -1,10 +1,10 @@
 import { Grid, Typography } from '@mui/material';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import CoinbaseBlock from '../ui/blocks/CoinbaseBlock';
+import BlockchainModelBlock from '../ui/blocks/BlockchainModelBlock';
 
 export default function ModelPage() {
-  const blockchain = useSelector((state) => state.coinbaseBlockchain);
+  const blockchain = useSelector((state) => state.transactionsBlockchain);
   // const blockchainB = useSelector((state) => state.prevBlockchainPeerB);
   // const blockchainC = useSelector((state) => state.prevBlockchainPeerC);
   return (
@@ -27,7 +27,7 @@ export default function ModelPage() {
       </Grid>
       {blockchain?.map((el) => (
         <Grid item xs={3} key={el.id}>
-          <CoinbaseBlock id={el.id} />
+          <BlockchainModelBlock id={el.id} />
         </Grid>
       ))}
       {/* <Grid item xs={12}>

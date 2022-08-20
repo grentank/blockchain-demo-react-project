@@ -14,7 +14,7 @@ export default function CoinbasePage() {
           fontSize: 34,
         }}
         >
-          Tokens
+          Coinbase
         </Typography>
       </Grid>
       <Grid item xs={12}>
