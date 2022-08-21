@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/blockchain-demo-react-project/static/css/main.073c9b0a.css",
+    "main.css": "/blockchain-demo-react-project/static/css/main.1b21633b.css",
     "main.js": "/blockchain-demo-react-project/static/js/main.00ddd9f2.js",
     "index.html": "/blockchain-demo-react-project/index.html",
-    "main.073c9b0a.css.map": "/blockchain-demo-react-project/static/css/main.073c9b0a.css.map",
+    "main.1b21633b.css.map": "/blockchain-demo-react-project/static/css/main.1b21633b.css.map",
     "main.00ddd9f2.js.map": "/blockchain-demo-react-project/static/js/main.00ddd9f2.js.map"
   },
   "entrypoints": [
-    "static/css/main.073c9b0a.css",
+    "static/css/main.1b21633b.css",
     "static/js/main.00ddd9f2.js"
   ]
 }
