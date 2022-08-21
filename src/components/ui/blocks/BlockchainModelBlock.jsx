@@ -40,7 +40,9 @@ export default function BlockchainModelBlock({ id, TYPE }) {
     dispatch(modifyTransactionsBlockchain({
       ...inputs,
       tokens: inputs.tokens
-        .map((token, index) => (index === idd ? { ...token, [name]: value } : token)),
+        .map((token, index) => (index === idd
+          ? { ...token, data: { ...token.data, [name]: value } }
+          : token)),
     }, id, blockchain, TYPE));
   };
 
@@ -183,6 +185,8 @@ export default function BlockchainModelBlock({ id, TYPE }) {
                   variant="outlined"
                   name="signature"
                   fullWidth
+                  sx={{ color: token.meta.verified === false ? 'error.main' : 'black' }}
+                  error={token.meta.verified === false}
                   value={token.signature}
                   onChange={(e) => handleTokens(e, ind)}
                 />

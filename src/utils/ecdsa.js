@@ -12,24 +12,34 @@ export function generateKeyPair() {
   );
 }
 
-export function signTransaction(transaction) {
+export async function signTransaction(transaction) {
   return window.crypto.subtle.sign(
     {
       name: 'ECDSA',
       hash: { name: 'SHA-256' },
-    //   name: 'RSA-PSS',
-    //   saltLength: 128,
     },
-    transaction.data.sender.keypair.privateKey,
+    await window.crypto.subtle.importKey(
+      'jwk',
+      transaction.data.sender.keypair.privateKey,
+      {
+        name: 'ECDSA',
+        namedCurve: 'P-256',
+      },
+      true,
+      ['sign'],
+    ),
     Buffer.from(JSON.stringify(transaction.data)),
   ).then((sig) => ({
     ...transaction,
-    _sig: sig,
+    // sig,
+    // _sig: Buffer.from(sig).toString(),
+    // parsedsig: new TextEncoder().encode(Buffer.from(sig).toString()).buffer,
+    // sig: Buffer.from(sig),
     signature: Buffer.from(sig).toString('hex'),
   }));
 }
 
-export function verifyTransaction(transaction) {
+export async function verifyTransaction(transaction) {
   return window.crypto.subtle.verify(
     {
       name: 'ECDSA',
@@ -37,8 +47,18 @@ export function verifyTransaction(transaction) {
     //   name: 'RSA-PSS',
     //   saltLength: 128,
     },
-    transaction.data.sender.keypair.publicKey,
-    transaction._sig,
+    await window.crypto.subtle.importKey(
+      'jwk',
+      transaction.data.sender.keypair.publicKey,
+      {
+        name: 'ECDSA',
+        namedCurve: 'P-256',
+      },
+      true,
+      ['verify'],
+    ),
+    // new TextEncoder().encode(transaction._sig).buffer,
+    Uint8Array.from(Buffer.from(transaction.signature, 'hex')),
     Buffer.from(JSON.stringify(transaction.data)),
   );
 }
@@ -63,8 +83,14 @@ export async function generateTransactionNoVerification(amount) {
 }
 
 export async function generatePeer() {
-  const peer = { keypair: await generateKeyPair() };
-  peer.publicKeyHex = Buffer.from(await window.crypto.subtle.exportKey('spki', peer.keypair.publicKey)).toString('hex');
+  const keypair = await generateKeyPair();
+  const peer = {
+    keypair: {
+      publicKey: await window.crypto.subtle.exportKey('jwk', keypair.publicKey),
+      privateKey: await window.crypto.subtle.exportKey('jwk', keypair.privateKey),
+    },
+    publicKeyHex: Buffer.from(await window.crypto.subtle.exportKey('spki', keypair.publicKey)).toString('hex'),
+  };
   return peer;
 }
 

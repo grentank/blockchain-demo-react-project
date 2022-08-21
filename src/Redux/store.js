@@ -16,9 +16,9 @@ const store = configureStore({
     transactionsBlockchain: transactionsBlockchainReducer,
   },
   preloadedState: window.__PRELOADED_STATE__,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({ // нужно потом отключить
-    serializableCheck: false,
-  }),
+  // middleware: (getDefaultMiddleware) => getDefaultMiddleware({ // нужно потом отключить
+  //   serializableCheck: false,
+  // }),
 });
 
 export default store;

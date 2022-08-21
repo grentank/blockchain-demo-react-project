@@ -8,6 +8,7 @@ import { generateTokensBlockchain } from '../Redux/actions/tokensBlockchainActio
 import { generateTransactionsBlockchain } from '../Redux/actions/transactionsBlockchainActions';
 import PublicRoutes from './routing/PublicRoutes';
 import NavBar from './ui/navbar/NavBar';
+import { generateSignedBlocks } from '../utils/generateSignedBlocks';
 
 export default function App() {
   // useEffect(() => {
@@ -22,6 +23,7 @@ export default function App() {
     dispatch(generateTokensBlockchain(4));
     dispatch(generateCoinbaseBlockchain(4));
     dispatch(generateTransactionsBlockchain(4));
+    // generateSignedBlocks(4);
     // generateTokensBlocksAsync(5);
   }, []);
   // useEffect(() => {

@@ -1,19 +1,20 @@
 import { verifyTransaction } from '../../utils/ecdsa';
-import { generateSignedBlocks, remineSignedBlockchain } from '../../utils/generateSignedBlocks';
+import { generateSignedBlocks, generateSignedMinedBlocks, remineSignedBlockchain } from '../../utils/generateSignedBlocks';
 import hashIsValid from '../../utils/hashIsValid';
 import mineNonce from '../../utils/mineNonce';
 import sha256 from '../../utils/sha256';
 import { GENERATE_TRANSACTIONS_BLOCKCHAIN, MODIFY_TRANSACTIONS_BLOCKCHAIN, SET_MINING_TRANSACTIONS_BLOCK } from '../types';
 
 export const recalculateTransactionsBlockchain = async (blockchain) => {
+  // console.log('Recalculating blockchain:', blockchain);
   const newBlockchain = [];
   for (let i = 0; i < blockchain.length; i += 1) {
     const prev = i > 0 ? newBlockchain[i - 1].hash : '0'.repeat(64);
     const data = { ...blockchain[i].data, prev, tokens: [] };
-    for (let j = 0; j < blockchain[i].tokens.length; j += 1) {
+    for (let j = 0; j < blockchain[i].data.tokens.length; j += 1) {
       data.tokens.push({
-        ...blockchain[i].tokens[j],
-        meta: { verified: await verifyTransaction(blockchain[i].tokens[j]) },
+        ...blockchain[i].data.tokens[j],
+        meta: { verified: await verifyTransaction(blockchain[i].data.tokens[j]) },
       });
     }
     const hash = await sha256(data);
@@ -28,15 +29,17 @@ export const recalculateTransactionsBlockchain = async (blockchain) => {
 };
 
 export const generateTransactionsBlockchain = (num, TYPE) => (dispatch) => {
-  generateSignedBlocks(num)
-    .then(remineSignedBlockchain)
-    .then((blockchain) => {
-      console.log('Generated:', blockchain);
-      dispatch({
-        type: TYPE ? GENERATE_TRANSACTIONS_BLOCKCHAIN + TYPE : GENERATE_TRANSACTIONS_BLOCKCHAIN,
-        payload: blockchain,
-      });
-    });
+  // generateSignedBlocks(num)
+  //   .then(remineSignedBlockchain)
+  //   .then((blockchain) => {
+  const blockchain = generateSignedMinedBlocks(num);
+  // console.log('Generated:', blockchain);
+  // console.log(JSON.stringify(blockchain));
+  dispatch({
+    type: TYPE ? GENERATE_TRANSACTIONS_BLOCKCHAIN + TYPE : GENERATE_TRANSACTIONS_BLOCKCHAIN,
+    payload: blockchain,
+  });
+  // });
 };
 
 export const modifyTransactionsBlockchain = (data, id, blockchain, TYPE) => (dispatch) => {
