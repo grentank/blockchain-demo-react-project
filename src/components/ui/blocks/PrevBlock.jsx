@@ -39,7 +39,7 @@ export default function PrevBlock({ id, TYPE }) {
   };
 
   const mineNonce = () => {
-    console.log('This is dispatch:', dispatch(setMiningPrevBlock(id, TYPE)));
+    dispatch(setMiningPrevBlock(id, TYPE));
     dispatch(minePrevBlockNonce(id, blockchain, TYPE));
   };
 

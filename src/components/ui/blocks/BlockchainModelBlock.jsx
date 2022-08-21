@@ -154,7 +154,7 @@ export default function BlockchainModelBlock({ id, TYPE }) {
                   label="Amount"
                   variant="outlined"
                   name="amount"
-                  sx={{ width: '25%' }}
+                  sx={{ width: '10%' }}
                   value={token.data.amount}
                   onChange={(e) => handleTokens(e, ind)}
                 />
@@ -175,7 +175,7 @@ export default function BlockchainModelBlock({ id, TYPE }) {
                   label="Receiver"
                   variant="outlined"
                   name="receiver"
-                  sx={{ width: '30%' }}
+                  sx={{ width: '45%' }}
                   value={token.data.receiver.publicKeyHex}
                   onChange={(e) => handleTokens(e, ind)}
                 />

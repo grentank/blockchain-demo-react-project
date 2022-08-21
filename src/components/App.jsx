@@ -1,5 +1,7 @@
-import { Container } from '@mui/material';
-import React, { useEffect } from 'react';
+import {
+  Box, CircularProgress, Container, Fade, Typography,
+} from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Buffer } from 'buffer';
 import { generateCoinbaseBlockchain } from '../Redux/actions/coinbaseBlockchainActions';

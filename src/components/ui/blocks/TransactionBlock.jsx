@@ -7,7 +7,9 @@ import {
 } from '@mui/material';
 import { Buffer } from 'buffer';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { generateTransactionNoVerification, signTransaction, verifyTransaction } from '../../../utils/ecdsa';
+import {
+  generateP2PTransaction, generatePeer, generateTransactionNoVerification, signTransaction, verifyTransaction,
+} from '../../../utils/ecdsa';
 
 export default function TransactionBlock() {
   const initTransaction = {
@@ -70,7 +72,7 @@ export default function TransactionBlock() {
     signTransaction(transaction)
       .then((newTransaction) => {
         setTransaction(newTransaction);
-        setReceivedTransaction(newTransaction);
+        setReceivedTransaction({ ...newTransaction, meta: { verified: null } });
         setGrowReceive(true);
       });
     // window.crypto.subtle.sign(
@@ -101,7 +103,8 @@ export default function TransactionBlock() {
   };
   useEffect(() => {
     window.Buffer = Buffer;
-    generateTransactionNoVerification('30')
+    const genTrans = async () => generateP2PTransaction({ amount: '30', sender: await generatePeer(), receiver: await generatePeer() });
+    genTrans()
       .then((generatedTransaction) => setTransaction(generatedTransaction));
     // window.crypto.subtle.generateKey(
     //   {

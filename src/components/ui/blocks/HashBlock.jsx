@@ -7,7 +7,7 @@ import {
 import sha256 from '../../../utils/sha256';
 // import findHashZeroes from '../../../utils/hashZeroes';
 
-export default function HashBlock() {
+export default function HashBlock() { // С ДВУХ НУЛЕЙ ХЭШ НАЧИНАЕТСЯ Математик, С ШЕСТИ НУЛЕЙ 5nfou
   // const a0 = '0123456789abcdefghijklmnopqrstuvwxyz';
   // for (let i = 0; i < 1e5; i += 1) {
   //   const hashed = await sha256(i);
